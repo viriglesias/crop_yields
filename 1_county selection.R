@@ -12,7 +12,7 @@ if (!dir.exists('Data/Raw')) {dir.create('Data/Raw')}
 if (!dir.exists('Data/Processed')) {dir.create('Data/Processed')}
 
 # Corn --------------------------------------------------------------------
-xls_file <- '/Users/viig7608/Desktop/CCP/Agric/Raw data/Corn Yield - All States.xlsx'
+xls_file <- 'Corn Yield - All States.xlsx'
 corn_df <- excel_sheets(xls_file)[3:length(excel_sheets(xls_file))] %>%
   map_df(read_excel,
          path = xls_file)#read and create data frame
@@ -57,7 +57,7 @@ write.csv(corn_df, 'Data/Raw/corn_raw.csv', row.names = FALSE)#write to csv
 
 # Winter wheat ------------------------------------------------------------
 #Read wheat data and filter
-csv_files <- list.files(path = '/Users/viig7608/Desktop/CCP/Agric/Raw data/wheat',
+csv_files <- list.files(path = 'Raw data/wheat',
                         full.names = TRUE)#List of files with wheat data. 
 
 cl <- makeCluster(getOption("cl.cores", detectCores() -1 ), type = 'FORK')#Create cluster to process in parallel
@@ -111,7 +111,7 @@ write.csv(wheat_df, 'Data/Raw/winter_wheat_raw.csv', row.names = FALSE)#write to
 
 # Spring wheat ------------------------------------------------------------
 #Read wheat data and filter
-csv_files <- list.files(path = '/Users/viig7608/Desktop/CCP/Agric/Raw data/wheat',
+csv_files <- list.files(path = 'wheat',
                         full.names = TRUE)#List of files with wheat data. 
 
 cl <- makeCluster(getOption("cl.cores", detectCores() -1 ), type = 'FORK')#Create cluster to process in parallel

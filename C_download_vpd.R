@@ -4,7 +4,7 @@
 # - requires couunty-landcover-prism cw
 
 source('0_all_functions.R')
-setwd('/Users/viig7608/Desktop/CCP/VPD/max')
+setwd('VPD/max')
 
 lib <- c('prism', 'tidyverse', 'raster', 'Rcpp', 'reshape', 'rgdal', 'sf', 'parallel', 'pbapply','ggpubr')#required packages
 sapply(lib, load.me)#install and load required packages
@@ -21,7 +21,7 @@ bils <- list.files(pattern = '.bil.bil$',
 # file.remove(bils[seq(1, 391, by = 13)])#remove unnecessary files. double check that these files exist (!)
 
 #Get vpdmax time series
-cw_lc <- read.csv('/Users/viig7608/Desktop/CCP/Precip/PRISM/Summaries/county-landcover-prism_cw.csv')[,-1]#landcover-county-prism crosswalk
+cw_lc <- read.csv('Precip/PRISM/Summaries/county-landcover-prism_cw.csv')[,-1]#landcover-county-prism crosswalk
 
 cl <- makeCluster(getOption("cl.cores", detectCores() -1 ), type = 'FORK')#Create cluster to process in parallel
 vpdmax_df <- pblapply(bils,
@@ -42,5 +42,5 @@ vpdmax_county_crops_sum <- vpdmax_df %>%
             SE_vpdmax = SD_vpdmax/sqrt(n())) %>% 
   ungroup()
 
-write_csv(vpdmax_county_crops_sum, '/Users/viig7608/Desktop/CCP/VPD/max/Summaries/monthly_vpdmax_county_crops-only_summaries.csv')#Save monthly summaries
+write_csv(vpdmax_county_crops_sum, 'VPD/max/Summaries/monthly_vpdmax_county_crops-only_summaries.csv')#Save monthly summaries
 

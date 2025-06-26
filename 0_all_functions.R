@@ -103,7 +103,7 @@ get_dev <- function(crop, variable, management, type){
       }else{
         climate <- read.csv(paste0('Data/Processed/', variable, '/', variable, '_diff_1980-2020_', win, '_yr.csv'))[,-1]
         }
-    fips <- read.csv('/Users/viig7608/Desktop/CCP/state-geocodes-v2016.csv')#fips and state names
+    fips <- read.csv('state-geocodes-v2016.csv')#fips and state names
     climate <- left_join(climate, fips) 
     climate <- climate %>% 
       mutate(id = paste(toupper(State), toupper(NAME), sep = '_'))#create unique identifier that matches corn data
@@ -441,7 +441,7 @@ plot_dens <- function(crop, x, variable, Plot, L){
   }else{
     read.csv(paste0('Data/Processed/', variable, '/', variable, '_diff_1980-2020_1_yr.csv'))[,-1]
   }
-  fips <- read.csv('/Users/viig7608/Desktop/CCP/state-geocodes-v2016.csv')#fips and state names
+  fips <- read.csv('state-geocodes-v2016.csv')#fips and state names
   climate <- left_join(climate, fips) 
   climate <- climate %>% 
     mutate(id = paste(toupper(State), toupper(NAME), sep = '_'))#create unique identifier that matches corn data
@@ -502,7 +502,7 @@ plot_gam_crop <- function(crop, variable, win, Absolute, min_yr){
   }else{
     climate <- read.csv(paste0('Data/Processed/', variable, '/', variable, '_diff_1980-2020_', win, '_yr.csv'))[,-1]
   }
-  fips <- read.csv('/Users/viig7608/Desktop/CCP/state-geocodes-v2016.csv')#fips and state names
+  fips <- read.csv('state-geocodes-v2016.csv')#fips and state names
   climate <- left_join(climate, fips) 
   climate <- climate %>% 
     mutate(id = paste(toupper(State), toupper(NAME), sep = '_'))#create unique identifier that matches corn data
@@ -654,7 +654,7 @@ plot_gam_study <- function(crop1, crop2, variable, win, Absolute, colors_crop){
   }else{
     climate <- read.csv(paste0('Data/Processed/', variable, '/', variable, '_diff_1980-2020_', win, '_yr.csv'))[,-1]
   }
-  fips <- read.csv('/Users/viig7608/Desktop/CCP/state-geocodes-v2016.csv')#fips and state names
+  fips <- read.csv('state-geocodes-v2016.csv')#fips and state names
   climate <- left_join(climate, fips) 
   climate <- climate %>% 
     mutate(id = paste(toupper(State), toupper(NAME), sep = '_'))#create unique identifier that matches corn data
@@ -749,7 +749,7 @@ dev_gam_study <- function(crop1, crop2, variable, win, Absolute){
   }else{
     climate <- read.csv(paste0('Data/Processed/', variable, '/', variable, '_diff_1980-2020_', win, '_yr.csv'))[,-1]
   }
-  fips <- read.csv('/Users/viig7608/Desktop/CCP/state-geocodes-v2016.csv')#fips and state names
+  fips <- read.csv('state-geocodes-v2016.csv')#fips and state names
   climate <- left_join(climate, fips) 
   climate <- climate %>% 
     mutate(id = paste(toupper(State), toupper(NAME), sep = '_'))#create unique identifier that matches corn data
@@ -847,7 +847,7 @@ plot_gam_study_short <- function(crop1, crop2, variable, win, Absolute, colors_c
   }else{
     climate <- read.csv(paste0('Data/Processed/', variable, '/', variable, '_diff_1980-2020_', win, '_yr.csv'))[,-1]
   }
-  fips <- read.csv('/Users/viig7608/Desktop/CCP/state-geocodes-v2016.csv')#fips and state names
+  fips <- read.csv('state-geocodes-v2016.csv')#fips and state names
   climate <- left_join(climate, fips) 
   climate <- climate %>% 
     mutate(id = paste(toupper(State), toupper(NAME), sep = '_'))#create unique identifier that matches corn data
@@ -915,7 +915,7 @@ get_dev_dev <- function(crop, variable, management, type, win){
     }else{
       climate <- read.csv(paste0('Data/Processed/', variable, '/', variable, '_diff_1980-2020_', win, '_yr.csv'))[,-1]
     }
-    fips <- read.csv('/Users/viig7608/Desktop/CCP/state-geocodes-v2016.csv')#fips and state names
+    fips <- read.csv('state-geocodes-v2016.csv')#fips and state names
     climate <- left_join(climate, fips) 
     climate <- climate %>% 
       mutate(id = paste(toupper(State), toupper(NAME), sep = '_'))#create unique identifier that matches corn data

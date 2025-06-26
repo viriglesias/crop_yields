@@ -9,8 +9,8 @@ lib <- c('prism', 'tidyverse', 'raster', 'Rcpp', 'reshape', 'rgdal', 'sf', 'para
 sapply(lib, load.me)#install and load required packages
 
 #Get precip time series
-cw_lc <- read.csv('/Users/viig7608/Desktop/CCP/Precip/PRISM/Summaries/county-landcover-prism_cw.csv')[,-1]
-bils <- list.files(path = '/Users/viig7608/Desktop/CCP/Precip/PRISM/Raw data/',
+cw_lc <- read.csv('Precip/PRISM/Summaries/county-landcover-prism_cw.csv')[,-1]
+bils <- list.files(path = 'Precip/PRISM/Raw data/',
                    pattern = '.bil.bil$',
                    recursive = TRUE,
                    full.names = TRUE)#List of files with gridded monthly precip data
@@ -34,5 +34,5 @@ precip_county_crops_sum <- prec_df %>%
             SE_prec = SD_prec/sqrt(n())) %>% 
   ungroup()
 
-write_csv(precip_county_crops_sum, '/Users/viig7608/Desktop/CCP/Precip/PRISM/Summaries/monthly_precip_county_crops-only_summaries.csv')#Save monthly summaries
+write_csv(precip_county_crops_sum, 'Precip/PRISM/Summaries/monthly_precip_county_crops-only_summaries.csv')#Save monthly summaries
 

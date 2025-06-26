@@ -104,7 +104,7 @@ if(nrow(df) != nrow(training) + nrow(validation)){
 
 # Compute Monte-Carlo Geary's C ----------------------------------------------
 # County boundaries 
-county_st <- st_read( '/Users/viig7608/Desktop/CCP/cb_2019_us_county_500k/cb_2019_us_county_500k.shp') %>% 
+county_st <- st_read( 'cb_2019_us_county_500k.shp') %>% 
   st_transform(crs ='+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96
                           +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0
                           +units=m +no_defs')#Albers equal area projection
@@ -113,7 +113,7 @@ county_st <- county_st %>%
   mutate(NAME = as.factor(toupper(NAME)),
          STATEFP = as.factor(STATEFP))
 
-fips <- read.csv('/Users/viig7608/Desktop/CCP/state-geocodes-v2016.csv')#fips and state names
+fips <- read.csv('state-geocodes-v2016.csv')#fips and state names
 fips <- fips %>%  
   mutate(STATE = toupper(State),
          STATEFP = as.factor(ifelse(nchar(STATEFP)<2, paste0('0', STATEFP), 

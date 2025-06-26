@@ -3,7 +3,7 @@
 # - calculates monthly summaries per county and landcover and saves them in ./Summaries
 # - requires county-landcover-prism crosswalk
 
-setwd('/Users/viig7608/Desktop/CCP/Tmean')
+setwd('Tmean')
 source('0_all_functions.R')
 
 lib <- c('prism', 'tidyverse', 'raster', 'Rcpp', 'reshape', 'rgdal', 'sf', 'parallel', 'pbapply','ggpubr')#required packages
@@ -20,7 +20,7 @@ bils <- list.files(pattern = '.bil.bil$',
 
 # file.remove(bils[seq(1, 391, by = 13)])#remove unnecessary files. double check that these files exist (!)
 # Get tmean time series
-cw_lc <- read.csv('/Users/viig7608/Desktop/CCP/Precip/PRISM/Summaries/county-landcover-prism_cw.csv')[,-1]#landcover-county-prism crosswalk
+cw_lc <- read.csv('PRISM/Summaries/county-landcover-prism_cw.csv')[,-1]#landcover-county-prism crosswalk
 
 cl <- makeCluster(getOption("cl.cores", detectCores() -1 ), type = 'FORK')#Create cluster to process in parallel
 tmean_df <- pblapply(bils,
@@ -41,5 +41,5 @@ tmean_county_crops_sum <- tmean_df %>%
             SE_tmean = SD_tmean/sqrt(n())) %>% 
   ungroup()
 
-write_csv(tmean_county_crops_sum, '/Users/viig7608/Desktop/CCP/Tmean/Summaries/monthly_tmean_county_crops-only_summaries.csv')#Save monthly summaries
+write_csv(tmean_county_crops_sum, 'Tmean/Summaries/monthly_tmean_county_crops-only_summaries.csv')#Save monthly summaries
 

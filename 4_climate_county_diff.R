@@ -3,10 +3,10 @@ library(readxl)
 library(sf)
 library(ggthemes)
 crop <- 'corn'
-i_ni <- read.csv(paste0('/Users/viig7608/Desktop/CCP/Agric/', crop, '/', crop, '_county_diff_not_detrended/nonirrigated/', crop, '_nonirrigated_county_diff_not_detrended_1_yr.csv'))[,-1]
+i_ni <- read.csv(paste0(crop, '/', crop, '_county_diff_not_detrended/nonirrigated/', crop, '_nonirrigated_county_diff_not_detrended_1_yr.csv'))[,-1]
 colnames(i_ni)[2] <- 'ni_mean'
 #
-i_i <- read.csv(paste0('/Users/viig7608/Desktop/CCP/Agric/', crop, '/', crop, '_county_diff_not_detrended/irrigated/', crop, '_irrigated_county_diff_not_detrended_1_yr.csv'))[,-1]
+i_i <- read.csv(paste0(crop, '/', crop, '_county_diff_not_detrended/irrigated/', crop, '_irrigated_county_diff_not_detrended_1_yr.csv'))[,-1]
 colnames(i_i)[2] <- 'i_mean'
 #
 info <- full_join(i_ni, i_i)
@@ -26,7 +26,7 @@ info <- filter(info, late>10)
 length(unique(info$id))
 
 #get precip data
-prec <- read.csv('/Users/viig7608/Desktop/CCP/Precip/PRISM/Summaries/monthly_precip_county_crops-only_summaries.csv')#precip in croplands grouped by county
+prec <- read.csv('PRISM/Summaries/monthly_precip_county_crops-only_summaries.csv')#precip in croplands grouped by county
 prec <- filter(prec, Month %in% 4:9)#only focus on growing season
 #
 prec_sum_complete <- prec %>%
@@ -35,7 +35,7 @@ prec_sum_complete <- prec %>%
   ungroup()
 
 
-fips <- read.csv('/Users/viig7608/Desktop/CCP/state-geocodes-v2016.csv')#fips and state names
+fips <- read.csv('state-geocodes-v2016.csv')#fips and state names
 prec_sum_complete <- left_join(prec_sum_complete, fips) 
 prec_sum_complete <- prec_sum_complete %>% 
   mutate(id = paste(toupper(State), toupper(NAME), sep = '_'))
@@ -90,7 +90,7 @@ prec_sd <- ggplot() +
 
 
 #Get tmean data
-tmean <- read.csv('/Users/viig7608/Desktop/CCP/Tmean/Summaries/monthly_tmean_county_crops-only_summaries.csv')#tmeanip in croplands grouped by county
+tmean <- read.csv('Tmean/Summaries/monthly_tmean_county_crops-only_summaries.csv')#tmeanip in croplands grouped by county
 tmean <- filter(tmean, Month %in% 4:9)#only focus on growing season
 
 tmean_sum_complete <- tmean %>% 
@@ -151,8 +151,8 @@ tmean_sd <- ggplot() +
   ylab('Density')
 
 #Get VPD
-vpd_max <- read.csv('/Users/viig7608/Desktop/CCP/VPD/max/Summaries/monthly_vpdmax_county_crops-only_summaries.csv')#vpdip in croplands grouped by county
-vpd_min <- read.csv('/Users/viig7608/Desktop/CCP/VPD/min/Summaries/monthly_vpdmin_county_crops-only_summaries.csv')#vpdip in croplands grouped by county
+vpd_max <- read.csv('VPD/max/Summaries/monthly_vpdmax_county_crops-only_summaries.csv')#vpdip in croplands grouped by county
+vpd_min <- read.csv('VPD/min/Summaries/monthly_vpdmin_county_crops-only_summaries.csv')#vpdip in croplands grouped by county
 
 vpd <- left_join(vpd_max, vpd_min) %>% 
   mutate(Mean_vpd = (Mean_vpdmax + Mean_vpdmin)/2)
@@ -222,9 +222,8 @@ ggpubr::ggarrange(tmean_m, tmean_sd,
                   ncol = 2,
                   nrow = 3)
 
-ggsave(paste0('/Users/viig7608/Desktop/CCP/Agric/Figures/climate_corn_counties.jpeg'),  width = 8.93, height = 6)
 
-county_st <- st_read('/Users/viig7608/Desktop/CCP/cb_2019_us_county_500k/cb_2019_us_county_500k.shp')#county boundaries
+county_st <- st_read('cb_2019_us_county_500k/cb_2019_us_county_500k.shp')#county boundaries
 
 county_st <- subset(county_st, !(STATEFP %in% c('78', '72', '69', '66', '60', '15', '02')))#keep lower 48 + DC
 
@@ -254,7 +253,7 @@ county_corn_some <- left_join(county_corn_some, tmean_some_counties_wide, by = c
 county_corn_some <- left_join(county_corn_some, vpd_some_counties_wide, by = c("STATEFP", "NAME"))
 
 #CONUS boundaries
-us <- st_read('/Users/viig7608/Documents/Proposals/DISES/cb_2018_us_state_500k')
+us <- st_read('cb_2018_us_state_500k')
 us <- subset(us, !(NAME %in% c('Puerto Rico', 'Alaska', 'American Samoa',
                                'United States Virgin Islands', 'Hawaii', 'Guam',
                                'Commonwealth of the Northern Mariana Islands')))
@@ -324,5 +323,4 @@ ggpubr::ggarrange(tmean_all, prec_all, vpd_all,
                   tmean_some, prec_some, vpd_some,
                   ncol = 3, nrow = 2)
 
-ggsave(paste0('/Users/viig7608/Desktop/CCP/Agric/Figures/climate_corn_counties_maps.jpeg'))
 
